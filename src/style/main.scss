@@ -63,7 +63,7 @@ header {
     }
 }
 .small {
-    padding: 1%;
+
 }
 .large {
     padding: 2%;
@@ -74,12 +74,15 @@ header {
 }
 //login
 #login {
-    margin: 0;
-    padding: 0;
+
 }
 //logout
 #logout {
-
+    margin-top: 2%;
+    button {
+        display: block;
+        margin: auto;
+    }
 }
 //about
 #about {

@@ -6,13 +6,15 @@ let m = require('mithril'),
     LogoutComponent = require('../Logout/Logout');
 
 module.exports = function(ctrl) {
-    return <header class = {ctrl.size() === 'small' ?
-    'row small col-xs-10':
-    'row large col-xs-12'
-    }>
-        <a href = '/#/about'>
-            <h1>{ctrl.name()}</h1>
-        </a>
+    return <header class = {'row ' + ctrl.size()}>
+        <div class={ctrl.size() === 'small' ?
+            'col-xs-8'
+            : 'col-xs-12'
+        }>
+            <a href = '/#/about'>
+                <h1>{ctrl.name()}</h1>
+            </a>
+        </div>
         {ctrl.size() === 'small' ?
             <LogoutComponent />
         : null}

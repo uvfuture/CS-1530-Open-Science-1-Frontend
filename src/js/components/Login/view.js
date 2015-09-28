@@ -6,9 +6,9 @@ let m = require('mithril'),
     BannerComponent = require('../Banner/Banner');
 
 module.exports = function(ctrl) {
-    return <div id = 'login'>
+    return <div id = 'login' class='container-fluid'>
         <BannerComponent size='large' />
-        <div class = 'main' class='row'>
+        <div class = 'main row'>
             <div class = 'inner'>
                 <div class = 'content'>
                     <h2>Login:</h2>

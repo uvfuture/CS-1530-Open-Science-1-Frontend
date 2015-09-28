@@ -41,15 +41,14 @@ header {
     color: #FAFAFA;
     text-decoration: none; }
 
-.small {
-  padding: 1%; }
-
 .large {
   padding: 2%; }
   .large h1 {
     text-align: center;
     font-size: 400%; }
 
-#login {
-  margin: 0;
-  padding: 0; }
+#logout {
+  margin-top: 2%; }
+  #logout button {
+    display: block;
+    margin: auto; }

@@ -6,9 +6,9 @@ let m = require('mithril'),
     BannerComponent = require('../Banner/Banner');
 
 module.exports = function(ctrl) {
-    return <div id = 'error'>
+    return <div id = 'error' class='container-fluid'>
         <BannerComponent size='large' />
-        <div class = 'main'>
+        <div class = 'main row'>
             <div class = 'inner'>
                 <div class = 'content'>
 
