@@ -5,7 +5,7 @@
 let m = require('mithril');
 
 module.exports = function(ctrl) {
-    return <div id = 'logout'>
-        <button onclick={ctrl.logout}> Logout {ctrl.logoutMessage()}</button>
+    return <div id = 'logout' class='col-xs-2'>
+        <button onclick={ctrl.logout} class='btn white'>Logout</button>
     </div>;
 };

@@ -19,6 +19,20 @@
   box-shadow: 0 2px 3px #BDBDBD;
   padding: 5%; }
 
+.btn {
+  webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0; }
+
+.orange {
+  background-color: #ffa726;
+  color: #FAFAFA; }
+
+.white {
+  background-color: #FAFAFA;
+  color: #ffa726; }
+
 header {
   background-color: #ffa726;
   color: #FAFAFA;
@@ -35,3 +49,7 @@ header {
   .large h1 {
     text-align: center;
     font-size: 400%; }
+
+#login {
+  margin: 0;
+  padding: 0; }

@@ -42,6 +42,17 @@ $orange-900:        #e65100;
     @include box-shadow(0 2px 3px $gray-400);
     padding: 5%;
 }
+.btn {
+    @include border-radius(0);
+}
+.orange {
+    background-color: $orange-400;
+    color: $gray-50;
+}
+.white {
+    background-color: $gray-50;
+    color: $orange-400;
+}
 //header
 header {
     @include background-font-color($orange-400, $gray-50);
@@ -63,7 +74,8 @@ header {
 }
 //login
 #login {
-
+    margin: 0;
+    padding: 0;
 }
 //logout
 #logout {

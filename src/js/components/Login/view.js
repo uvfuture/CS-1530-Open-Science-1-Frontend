@@ -8,7 +8,7 @@ let m = require('mithril'),
 module.exports = function(ctrl) {
     return <div id = 'login'>
         <BannerComponent size='large' />
-        <div class = 'main'>
+        <div class = 'main' class='row'>
             <div class = 'inner'>
                 <div class = 'content'>
                     <h2>Login:</h2>
@@ -17,7 +17,7 @@ module.exports = function(ctrl) {
                     <label for = 'password'>Password: </label>
                     <input type = 'password' name = 'password' id = 'password' value = {ctrl.password()}  onchange = {m.withAttr('value', ctrl.password)} />
                     <div class = 'button-div'>
-                        <button onclick={ctrl.login}>Log in!</button>
+                        <button type='button' class='btn orange' onclick={ctrl.login}>Log in!</button>
                     </div>
                     <p class = 'tooltip'>{ctrl.loginMessage()}</p>
                 </div>

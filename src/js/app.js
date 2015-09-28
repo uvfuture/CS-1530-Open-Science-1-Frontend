@@ -8,4 +8,4 @@ let m = require('mithril'),
 
 //router
 m.route.mode = 'hash';
-m.route(document.body.getElementsByTagName('app')[0], "/", router);
+m.route(document.body.getElementsByTagName('main')[0], "/", router);

@@ -5496,7 +5496,7 @@ var m = require('mithril'),
 
 //router
 m.route.mode = 'hash';
-m.route(document.body.getElementsByTagName('app')[0], "/", router);
+m.route(document.body.getElementsByTagName('main')[0], "/", router);
 
 },{"./router":217,"babelify/polyfill":188,"mithril":190}],192:[function(require,module,exports){
 'use strict';
@@ -5590,7 +5590,8 @@ var m = require('mithril'),
     LogoutComponent = require('../Logout/Logout');
 
 module.exports = function (ctrl) {
-    return { tag: "header", attrs: { 'class': ctrl.size() }, children: [{ tag: "a", attrs: { href: "/#/about" }, children: [{ tag: "h1", attrs: {}, children: [ctrl.name()] }] }, ctrl.size() === 'small' ? LogoutComponent : null] };
+    return { tag: "header", attrs: { 'class': ctrl.size() === 'small' ? 'row small col-xs-10' : 'row large col-xs-12'
+        }, children: [{ tag: "a", attrs: { href: "/#/about" }, children: [{ tag: "h1", attrs: {}, children: [ctrl.name()] }] }, ctrl.size() === 'small' ? LogoutComponent : null] };
 };
 
 },{"../Logout/Logout":208,"mithril":190}],200:[function(require,module,exports){
@@ -5714,7 +5715,7 @@ var m = require('mithril'),
     BannerComponent = require('../Banner/Banner');
 
 module.exports = function (ctrl) {
-    return { tag: "div", attrs: { id: "login" }, children: [m.component(BannerComponent, { size: "large" }), { tag: "div", attrs: { 'class': "main" }, children: [{ tag: "div", attrs: { 'class': "inner" }, children: [{ tag: "div", attrs: { 'class': "content" }, children: [{ tag: "h2", attrs: {}, children: ["Login:"] }, { tag: "label", attrs: { 'for': "email" }, children: ["Email: "] }, { tag: "input", attrs: { type: "text", name: "email", id: "email", value: ctrl.email(), onchange: m.withAttr('value', ctrl.email) } }, { tag: "label", attrs: { 'for': "password" }, children: ["Password: "] }, { tag: "input", attrs: { type: "password", name: "password", id: "password", value: ctrl.password(), onchange: m.withAttr('value', ctrl.password) } }, { tag: "div", attrs: { 'class': "button-div" }, children: [{ tag: "button", attrs: { onclick: ctrl.login }, children: ["Log in!"] }] }, { tag: "p", attrs: { 'class': "tooltip" }, children: [ctrl.loginMessage()] }] }] }] }] };
+    return { tag: "div", attrs: { id: "login" }, children: [m.component(BannerComponent, { size: "large" }), { tag: "div", attrs: { 'class': "main", 'class': "row" }, children: [{ tag: "div", attrs: { 'class': "inner" }, children: [{ tag: "div", attrs: { 'class': "content" }, children: [{ tag: "h2", attrs: {}, children: ["Login:"] }, { tag: "label", attrs: { 'for': "email" }, children: ["Email: "] }, { tag: "input", attrs: { type: "text", name: "email", id: "email", value: ctrl.email(), onchange: m.withAttr('value', ctrl.email) } }, { tag: "label", attrs: { 'for': "password" }, children: ["Password: "] }, { tag: "input", attrs: { type: "password", name: "password", id: "password", value: ctrl.password(), onchange: m.withAttr('value', ctrl.password) } }, { tag: "div", attrs: { 'class': "button-div" }, children: [{ tag: "button", attrs: { type: "button", 'class': "btn orange", onclick: ctrl.login }, children: ["Log in!"] }] }, { tag: "p", attrs: { 'class': "tooltip" }, children: [ctrl.loginMessage()] }] }] }] }] };
 };
 
 },{"../Banner/Banner":196,"mithril":190}],208:[function(require,module,exports){
@@ -5776,7 +5777,7 @@ module.exports.logoutMessage = '';
 var m = require('mithril');
 
 module.exports = function (ctrl) {
-    return { tag: "div", attrs: { id: "logout" }, children: [{ tag: "button", attrs: { onclick: ctrl.logout }, children: [" Logout ", ctrl.logoutMessage()] }] };
+    return { tag: "div", attrs: { id: "logout", 'class': "col-xs-2" }, children: [{ tag: "button", attrs: { onclick: ctrl.logout, 'class': "btn white" }, children: ["Logout"] }] };
 };
 
 },{"mithril":190}],212:[function(require,module,exports){
