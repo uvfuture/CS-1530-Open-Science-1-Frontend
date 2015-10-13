@@ -5,8 +5,12 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "gulp && node .",
-    "compile": "gulp compile:prod",
+    "start:dev": "gulp compile:dev && ENV='DEV' node .",
+    "start:test": "gulp test && ENV='TEST' node .",
+    "start:prod": "gulp compile:prod && ENV='PROD' node .",
+    "compile:dev": "gulp compile:dev",
+    "compile:test": "gulp compile:test",
+    "compile:prod": "gulp compile:prod",
     "test": "gulp test"
   },
   "dependencies": {
@@ -14,6 +18,7 @@
     "bower": "^1.4.1",
     "browserify": "^11.0.0",
     "debug": "^2.2.0",
+    "envify": "^3.4.0",
     "express": "~4.12.2",
     "gulp": "^3.9.0",
     "gulp-imagemin": "^2.3.0",

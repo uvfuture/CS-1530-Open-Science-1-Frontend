@@ -13,7 +13,7 @@ module.exports = function(data) {
     for(var prop in data) {
         ctrl[prop] = m.prop(data[prop]);
     }
-    //TODO: No logout for now...
+    //TODO: No logout for now...    //move to model
     /*
     ctrl.logout = function() {
         m.request({

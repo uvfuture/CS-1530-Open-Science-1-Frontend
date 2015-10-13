@@ -14,6 +14,7 @@ module.exports = function(data) {
         ctrl[prop] = m.prop(data[prop]);
     }
     //TODO, no calls for now...
+    //move to model
     /*
     ctrl.profileInfo(m.request({
         method: 'GET',

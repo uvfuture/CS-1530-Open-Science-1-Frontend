@@ -30,18 +30,26 @@ nvm use stable
 
 ---
 
+Compiling:
+- Run compile the dev app with:
+`npm run compile:dev`
+- Run compile the test app with:
+`npm run compile:test`
+- Run compile the production app with:
+`npm run compile:prod`
+
+---
+
 Running:
-- Run the dev/test server with:
-`npm start`
+- Run the dev server with:
+`npm run start:dev`
+- Run the test server with:
+`npm run start:test`
+- Run the prod server with:
+`npm run start:prod`
 
 ---
 
 Tests:
 - Run the tapes tests with:
 `npm run test`
-
----
-
-Compiling production:
-- Run compile the production server with:
-`npm run compile`

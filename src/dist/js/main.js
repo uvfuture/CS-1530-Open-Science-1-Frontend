@@ -5541,9 +5541,9 @@ var m = require('mithril'),
     BannerComponent = require('../Banner/Banner');
 
 module.exports = function (ctrl) {
-    return { tag: "div", attrs: { id: "about", 'class': "container-fluid" }, children: [BannerComponent, { tag: "div", attrs: { 'class': "main row" }, children: [{ tag: "div", attrs: { 'class': "inner" }, children: [{ tag: "div", attrs: { 'class': "content" }, children: [{ tag: "div", attrs: {}, children: [ctrl.aboutParagraphs().map(function (paragraph) {
-                            return { tag: "p", attrs: {}, children: [" ", paragraph, " "] };
-                        })] }] }] }] }] };
+    return { tag: "div", attrs: { id: "about", 'class': "container-fluid" }, children: [m.component(BannerComponent, { size: "large" }), { tag: "div", attrs: { 'class': "main row" }, children: [{ tag: "div", attrs: { 'class': "inner" }, children: [{ tag: "div", attrs: { 'class': "content" }, children: [ctrl.aboutParagraphs().map(function (paragraph) {
+                        return { tag: "p", attrs: {}, children: [" ", paragraph, " "] };
+                    }), { tag: "a", attrs: { href: "/#/login" }, children: [" Log in "] }] }] }] }] };
 };
 
 },{"../Banner/Banner":196,"mithril":190}],196:[function(require,module,exports){
@@ -5671,6 +5671,7 @@ module.exports = function (data) {
     ctrl.login = function () {
         m.route('/profile');
         //TODO: no auth for now...
+        //move to model?
         /*
             m.request({
                 method: 'POST',
@@ -5744,7 +5745,7 @@ module.exports = function (data) {
     for (var prop in data) {
         ctrl[prop] = m.prop(data[prop]);
     }
-    //TODO: No logout for now...
+    //TODO: No logout for now...    //move to model
     /*
     ctrl.logout = function() {
         m.request({
@@ -5807,6 +5808,7 @@ module.exports = function (data) {
         ctrl[prop] = m.prop(data[prop]);
     }
     //TODO, no calls for now...
+    //move to model
     /*
     ctrl.profileInfo(m.request({
         method: 'GET',
@@ -5844,16 +5846,29 @@ module.exports = function (ctrl) {
 },{"../Banner/Banner":196,"mithril":190}],216:[function(require,module,exports){
 'use strict';
 
+//TODO: need different hosts for different compiled envs (dev, test, prod)
+//TODO: need to breadcrumb
+
 var m = require('mithril'),
     userId = m.prop(''),
-    evaluateUserId = function evaluateUserId() {
+    url = undefined;
+
+console.log("DEV");
+if ("DEV" === 'PROD') {
+    url = 'http://localhost:3002';
+} else if ("DEV" === 'TEST') {
+    url = 'http://localhost:3000';
+}
+//default to dev
+else {
+        url = 'http://localhost:3001';
+    }
+
+function verifyUser() {
     if (!userId()) {
         m.request({
             method: 'GET',
-            url: url + '/getCurrentUser',
-            config: function config(xhr) {
-                xhr.withCredentials = true;
-            }
+            url: url + '/session/currentUser'
         }).then(function (res) {
             userId(res.user);
         }, function () {
@@ -5861,24 +5876,32 @@ var m = require('mithril'),
         });
     }
     return userId();
-},
-    url = undefined;
+}
 
-module.exports.url = url = 'http://localhost:4000';
-
-module.exports.userId = userId;
-
-module.exports.auth = function (res, options) {
-    evaluateUserId();
+//auth on xhr req.extract
+function checkAuthReq(res) {
+    verifyUser();
 
     if (res.status === 403) {
-        //TODO: breadcrumb where the user left off
         m.route('/login');
-        return res.status;
-    } else {
-        return res.response;
     }
-};
+
+    return res.response;
+}
+
+//api request, param: method and intended route
+function apiReq(method, route) {
+    return m.request({
+        method: method,
+        url: url + route,
+        extract: checkAuthReq,
+        config: function config(xhr) {
+            xhr.withCredentials = true;
+        }
+    });
+}
+
+module.exports.apiReq = apiReq;
 
 },{"mithril":190}],217:[function(require,module,exports){
 'use strict';
@@ -5889,10 +5912,6 @@ var m = require('mithril'),
     ErrorComponent = require('./components/Error/Error'),
     LoginComponent = require('./components/Login/Login'),
     ProfileComponent = require('./components/Profile/Profile');
-
-function verify() {
-    //
-}
 
 module.exports = {
     "/": {

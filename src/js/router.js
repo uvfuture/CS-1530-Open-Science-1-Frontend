@@ -7,10 +7,6 @@ let m = require('mithril'),
     LoginComponent = require('./components/Login/Login'),
     ProfileComponent = require('./components/Profile/Profile');
 
-function verify() {
-    //
-}
-
 module.exports = {
     "/": {
         controller: function () {

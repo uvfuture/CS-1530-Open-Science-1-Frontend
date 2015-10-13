@@ -2,20 +2,25 @@
 
 var express = require('express'),
     path = require('path'),
-    app = express();
+    app = express(),
+    staticDir;
+//envs
+if(process.env.ENV === 'PROD') {
+    staticDir = '/dist/';
+}
+else if(process.env.ENV === 'TEST') {
+    staticDir = '/src/dist/';
+}
+//default to dev
+else {
+    staticDir = '/src/dist/';
+}
 //config
 app.port = 3000;
-app.use(express.static(path.join(__dirname, '/src/dist/')));
+app.use(express.static(path.join(__dirname, staticDir)));
 //index
 app.use('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/src/dist/views/index.html'));
-});
-//server error
-app.use(function(err, req, res) {
-    res.send({
-        message: err.message,
-        error: err
-    });
+    res.sendFile(path.join(__dirname, staticDir, '/views/index.html'));
 });
 //server
 var server = require('http').createServer(app);

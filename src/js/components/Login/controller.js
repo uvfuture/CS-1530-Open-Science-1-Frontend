@@ -16,6 +16,7 @@ module.exports = function(data) {
     ctrl.login = function() {
         m.route('/profile');
     //TODO: no auth for now...
+    //move to model?
     /*
         m.request({
             method: 'POST',

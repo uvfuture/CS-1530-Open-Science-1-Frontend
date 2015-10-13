@@ -1,39 +1,59 @@
 'use strict';
 
+//TODO: need different hosts for different compiled envs (dev, test, prod)
+//TODO: need to breadcrumb
+
 let m = require('mithril'),
     userId = m.prop(''),
-    evaluateUserId = function() {
-        if(!userId()) {
-            m.request({
-                method: 'GET',
-                url: url + '/getCurrentUser',
-                config: function(xhr) {
-                    xhr.withCredentials = true;
-                }
-            }).then(function(res) {
-                userId(res.user);
-            }, function() {
-                m.route('/login');
-            });
-        }
-        return userId();
-    },
     url;
 
-module.exports.url = url = 'http://localhost:4000';
-
-module.exports.userId = userId;
-
-module.exports.auth = function(res, options) {
-    evaluateUserId();
-
-    if(res.status === 403) {
-        //TODO: breadcrumb where the user left off
-        m.route('/login');
-        return res.status;
+    console.log(process.env.ENV);
+    if(process.env.ENV === 'PROD') {
+        url = 'http://localhost:3002';
     }
+    else if(process.env.ENV === 'TEST') {
+        url = 'http://localhost:3000';
+    }
+    //default to dev
     else {
-        return res.response;
+        url = 'http://localhost:3001';
     }
+
+function verifyUser() {
+    if(!userId()) {
+        m.request({
+            method: 'GET',
+            url: url + '/session/currentUser',
+        }).then(function(res) {
+            userId(res.user);
+        }, function() {
+            m.route('/login');
+        });
+    }
+    return userId();
 }
 
+//auth on xhr req.extract
+function checkAuthReq(res) {
+    verifyUser();
+
+    if(res.status === 403) {
+        m.route('/login');
+    }
+
+    return res.response;
+}
+
+//api request, param: method and intended route
+function apiReq(method, route) {
+    return m.request({
+        method: method,
+        url: url + route,
+        extract: checkAuthReq,
+        config: function(xhr) {
+            xhr.withCredentials = true;
+        }
+    });
+}
+
+module.exports.apiReq = apiReq;

@@ -7,14 +7,14 @@ let m = require('mithril'),
 
 module.exports = function(ctrl) {
     return <div id = 'about' class='container-fluid'>
-        <BannerComponent />
+        <BannerComponent size='large'/>
         <div class = 'main row'>
             <div class = 'inner'>
                 <div class = 'content'>
-
-                    <div>{ctrl.aboutParagraphs().map(function (paragraph) {
-                        return <p> {paragraph} </p>
-                    })}</div>
+                    {ctrl.aboutParagraphs().map(function (paragraph) {
+                            return <p> {paragraph} </p>
+                    })}
+                    <a href = '/#/login'> Log in </a>
                 </div>
             </div>
         </div>

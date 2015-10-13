@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     mithrilify = require('mithrilify'),
     babelify = require('babelify'),
+    envify = require('envify'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
     minifyHTML = require('gulp-minify-html'),
@@ -34,9 +35,9 @@ gulp.task('html:dev', function() {
 gulp.task('js:dev', function () {
     browserify({
         entries: paths.pub_source + paths.js + 'app.js',
-        transform: [mithrilify, babelify]
+        transform: [mithrilify, babelify, [envify, { ENV: 'DEV'}]]
     })
-        .bundle().on('errpr', gutil.log)
+        .bundle().on('error', gutil.log)
         .pipe(source('main.js'))
         .pipe(buffer())
         .pipe(gulp.dest(paths.pub_dist + paths.js));
@@ -59,10 +60,16 @@ gulp.task('sass:prod', function () {
 gulp.task('html:prod', function() {
     gulp.src(paths.pub_dist + paths.views + '*.html')
         .pipe(minifyHTML({empty: true, spare: true}))
-        .pipe(gulp.dest(paths.prod_dist));
+        .pipe(gulp.dest(paths.prod_dist + paths.views));
 });
 gulp.task('js:prod', function () {
-    gulp.src(paths.pub_dist + paths.js + '*.js')
+    browserify({
+        entries: paths.pub_source + paths.js + 'app.js',
+        transform: [mithrilify, babelify, [envify, { ENV: 'PROD'}]]
+    })
+        .bundle().on('error', gutil.log)
+        .pipe(source('main.js'))
+        .pipe(buffer())
         .pipe(uglify())
         .pipe(gulp.dest(paths.prod_dist + paths.js));
 });
