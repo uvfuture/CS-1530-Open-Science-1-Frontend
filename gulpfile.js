@@ -17,6 +17,7 @@ var paths = {
     pub_source : path.join(__dirname, 'src/'),
     pub_dist : path.join(__dirname, 'src/', 'dist/'),
     prod_dist : path.join(__dirname, 'dist/'),
+    test: 'test/',
     views: 'views/',
     style: 'style/',
     js: 'js/',
@@ -47,10 +48,12 @@ gulp.task('content:dev', function(){
         .pipe(gulp.dest(paths.pub_dist + paths.content))
 });
 gulp.task('compile:dev', ['sass:dev', 'html:dev', 'js:dev', 'content:dev']);
-//test
-gulp.task('test', function() {
-    return require('./test/main');
+//tests
+gulp.task('js:test', function() {
+    //return require('./test/main');
+    shell.exec("tape " + paths.test + paths.js + " | faucet");
 });
+gulp.task('test', ['js:test']);
 //prod
 gulp.task('sass:prod', function () {
     gulp.src(paths.pub_dist + paths.style + '*.css')
